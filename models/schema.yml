@@ -1,0 +1,95 @@
+version: 2
+
+# Define your source for the stock_warehouse schema
+sources:
+  - name: stock_warehouse  # Name of the source
+    schema: retail         # PostgreSQL schema where the tables are located
+    tables:
+      - name: accounts     # The accounts table in the retail schema
+        description: "Accounts data from stock warehouse"
+      - name: customers    # The customers table in the retail schema
+        description: "Customer data from stock warehouse"
+      - name: transactions # The transactions table in the retail schema
+        description: "Transaction data from stock warehouse"
+
+# Define your models
+models:
+  - name: stg_accounts
+    description: "Staging table for accounts"
+    columns:
+      - name: account_id
+        description: "Primary key for accounts"
+      - name: customer_id
+        description: "Foreign key referencing customer"
+      - name: account_type
+        description: "Type of the account (Checking/Savings/Credit)"
+      - name: balance
+        description: "The balance of the account"
+
+  - name: stg_customers
+    description: "Staging table for customers"
+    columns:
+      - name: customer_id
+        description: "Primary key for customers"
+      - name: name
+        description: "Name of the customer"
+      - name: email
+        description: "Email address of the customer"
+      - name: phone
+        description: "Phone number of the customer"
+      - name: address
+        description: "Address of the customer"
+
+  - name: stg_transactions
+    description: "Staging table for transactions"
+    columns:
+      - name: transaction_id
+        description: "Primary key for transactions"
+      - name: account_id
+        description: "Foreign key referencing account"
+      - name: transaction_date
+        description: "The date of the transaction"
+      - name: amount
+        description: "The transaction amount"
+      - name: transaction_type
+        description: "Type of the transaction (Debit/Credit)"
+
+  - name: dim_customers
+    description: "Dimension table for customers"
+    columns:
+      - name: customer_id
+        description: "Primary key for customers"
+      - name: name
+        description: "Name of the customer"
+      - name: email
+        description: "Email of the customer"
+      - name: phone
+        description: "Phone number of the customer"
+      - name: address
+        description: "Customer address"
+
+  - name: fct_account_balances
+    description: "Fact table summarizing account balances"
+    columns:
+      - name: account_id
+        description: "Primary key for accounts"
+      - name: avg_balance
+        description: "Average balance for the account"
+      - name: max_balance
+        description: "Maximum balance recorded"
+      - name: min_balance
+        description: "Minimum balance recorded"
+
+  - name: fct_transactions
+    description: "Fact table storing transaction details"
+    columns:
+      - name: transaction_id
+        description: "Primary key for transactions"
+      - name: account_id
+        description: "Foreign key to the account"
+      - name: transaction_date
+        description: "Date of the transaction"
+      - name: amount
+        description: "Transaction amount"
+      - name: transaction_type
+        description: "Type of the transaction (Debit/Credit)"

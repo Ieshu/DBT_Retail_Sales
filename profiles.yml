@@ -1,0 +1,12 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost               # Your PostgreSQL host
+      user: postgres                # Your PostgreSQL username
+      password: ies123@IES123        # Your PostgreSQL password
+      port: 5432                    # Default PostgreSQL port
+      dbname: stock_warehouse        # Your PostgreSQL database name
+      schema: retail                 # Schema where dbt will create tables (you can change this if needed)
+      threads: 2                    # Number of threads for parallel processing

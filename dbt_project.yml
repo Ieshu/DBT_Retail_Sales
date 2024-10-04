@@ -1,0 +1,25 @@
+# Name of your dbt project
+name: 'dbt_retail_sales'
+version: '1.0'
+config-version: 2
+
+# Specify the profile to use
+profile: 'default'
+
+# Define where dbt should write compiled SQL and artifact files
+target-path: 'target'
+clean-targets:
+  - 'target'
+
+# Paths to directories that contain models, seeds, and macros
+model-paths: ["models"]   # Replacing source-paths with model-paths
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+# Configure the materializations for models in the project
+models:
+  dbt_retail_sales:
+    marts:
+      +materialized: table  # Materialize marts as tables
+    staging:
+      +materialized: view   # Materialize staging as views
